@@ -9,16 +9,18 @@ _y = tf.placeholder(tf.float32, shape=(None, 1), name='y_input')
 
 y = tf.matmul(tf.matmul(x, w1), w2)
 
-print(1.0 + 1e12)
+print(1.0 + 2e12)
 
-# 定义损失函数
+# 定义损失函数，经典损失函数
 cross_entropy = -tf.reduce_mean(_y * tf.log(tf.clip_by_value(y, 1e-10, 1.0)))
-train_step = tf.train.AdamOptimizer(0.001).minimize(cross_entropy)
+# cross_entropy = tf.nn.softmax_cross_entropy_with_logits(logits=y,labels=_y, name=None)
+train_step = tf.train.AdamOptimizer(0.001).minimize(cross_entropy)  # 反向传播函数
 
-# 生成模拟数据集
+# 生成模拟训练数据集
 rdm = RandomState(1)  # 定义局部种子
 dataset_size = 128
 X = rdm.rand(dataset_size, 2)
+# 0为负样本 1为正样本
 Y = [[int(x1 + x2 < 1)] for (x1, x2) in X]
 
 batch_size = 8

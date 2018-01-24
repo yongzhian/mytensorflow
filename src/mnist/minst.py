@@ -9,11 +9,16 @@ import sys
 print(" begin ")
 from tensorflow.examples.tutorials.mnist import input_data
 
-print(input_data)
+print("数据源信息：",input_data)
 import tensorflow as tf
 
 # 不存在会下载，建议提前下载好 http://yann.lecun.com/exdb/mnist/
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
+
+# 将数据集划分train、validation和test
+print("train数据大小",mnist.train.num_examples)
+print("validation数据大小",mnist.validation.num_examples)
+print("test数据大小",mnist.test.num_examples)
 
 # 60000张图片，每张28*28=784px[60000, 784]
 x = tf.placeholder(tf.float32, [None, 784])
